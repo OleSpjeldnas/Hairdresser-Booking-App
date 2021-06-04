@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/edit_treatments_hairdresser.css">
+    <base href="../../../">
+   
+   </head>
+
+<%- include('./models/nav'); %>
+
+  <h1 id="successmsg">You Have Successfully Saved the Changes</h1>
+
+  <h1>Edit Which Treatments Can Be Performed by Which Hairdressers</h1>
+  <h2>Choose Hairdresser</h2>
+  <select name="hairdressers" id = "hairdressers" class="form-control col-sm-4">
+  </select> 
+
+<h2 id="choose">Choose Which Treatments they can Perform</h2>
+<div id="main">
+<div id="treatments">
+</div>
+</div>
+
+<button id="submit" onclick="OnSubmit()">Save Changes</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+ 
+<script>
+    var TreatmentList           = <%- JSON.stringify(TreatmentList || null) %>,
+        Treatment_Hairdresser   = <%- JSON.stringify(Treatment_Hairdresser) %>,
+        all_hairdressers        = <%- JSON.stringify(all_hairdressers || null) %>,
+        admin_id                = <%- JSON.stringify(id || null) %>;
+
+ 
+        var treatments = document.getElementById("treatments");
+        var hairdressers = $("#hairdressers");
+        var cando = new Array();
+        var ChosenHairdresser = all_hairdressers[0].employee_id;
+
+        $(window).scroll(function() {
+      if ($(document).scrollTop() > 400) {
+          $('.nav').addClass('affix');
+      } else {
+          $('.nav').removeClass('affix');
+      }
+  });
+       
+  window.onload = function(){
+            AddHairdressersToDropdown();
+                TreatmentList.forEach(element => {
+                addTreatmentToList(element); 
+                CanDo(ChosenHairdresser,element.treatment);
+            });
+
+        }
+        hairdressers.on("change", function(){
+    cando = new Array();
+
+    ChosenHairdresser = this.value;
+    TreatmentList.forEach(element => {
+
+                CanDo(ChosenHairdresser,element.treatment);
+});});
+
+function addTreatmentToList(treatment){
+    var t = treatment.treatment.split(" ").join("");
+        t = t.split("'").join("");
+    
+    var row = document.createElement("div");
+        row.classList.add("row");
+        row.classList.add("list-element");
+        row.setAttribute("id", t);
+    
+    var name = document.createElement("p");
+        name.innerHTML = treatment.treatment;
+        name.setAttribute("id",t+"-name");
+        name.classList.add("col-sm-6");
+    
+        var nobtn = document.createElement("button");
+        nobtn.classList.add("nobtn");
+        nobtn.setAttribute("id",t+"-no");
+        nobtn.classList.add("col-sm-3");
+
+    var emojii = document.createElement("i");
+        emojii.classList.add("fas");
+        emojii.classList.add("fa-times");
+        nobtn.appendChild(emojii);
+
+    var yesbtn = document.createElement("button");
+        yesbtn.classList.add("yesbtn");
+        yesbtn.classList.add("col-sm-3");
+        yesbtn.setAttribute("id",t+"-yes");
+
+    var emo = document.createElement("i");
+        emo.classList.add("fas");
+        emo.classList.add("fa-check");
+        yesbtn.appendChild(emo);
+        row.appendChild(nobtn);
+        row.appendChild(name);
+        row.appendChild(yesbtn);
+
+        treatments.appendChild(row);
+
+    }
+
+function AddHairdressersToDropdown() {
+
+for (let i = 0; i < all_hairdressers.length; i++){
+var $option = $("<option/>", {
+value: all_hairdressers[i].employee_id,
+text: all_hairdressers[i].first_name + " " + all_hairdressers[i].last_name
+});
+hairdressers.append($option);
+//   console.log($option);
+}
+}
+
+function CanDo(hairdresser, treatment){
+    var bool = false;
+    var t = treatment.split(" ").join("");
+        t = t.split("'").join("");
+    var item = document.getElementById(t);
+    var nobtn = document.getElementById(t+"-no");
+    var yesbtn = document.getElementById(t+"-yes");
+
+for (var i = 0; i < Treatment_Hairdresser.length; i++){
+    if (hairdresser == Treatment_Hairdresser[i].employee_id && treatment == Treatment_Hairdresser[i].treatment_name){
+        cando.push(Treatment_Hairdresser[i].treatment_name);
+        if (item.className.indexOf('cando') == -1){
+            yesbtn.classList.add("active");
+            item.classList.add("cando");}
+        if (item.className && item.className.indexOf('cantdo') != -1){
+        item.classList.remove("cantdo");
+        nobtn.classList.remove("active");
+    }
+        bool = true;
+        break;
+    }
+}
+if (!bool){
+    if (item.className && item.className.indexOf('cando') != -1){
+        item.classList.remove("cando");
+        yesbtn.classList.remove("active");
+    }
+    if (item.className.indexOf('cantdo') == -1){
+    item.classList.add("cantdo");
+    nobtn.classList.add("active");}
+}
+
+
+}
+
+document.body.onclick = function(e) {  
+    
+    //when the document body is clicked
+   if (window.event) {
+       e = event.srcElement;           //assign the element clicked to e (IE 6-8)
+   }
+   else {
+       e = e.target;                   //assign the element clicked to e
+   }
+       var id = e.id;
+       var length = id.length;
+   if (e.className && e.className.indexOf('nobtn') != -1 && e.className.indexOf('active') == -1) {
+    var newlength = length - 3;
+    var newid = id.substr(0,newlength);
+    var nobtn = document.getElementById(newid+"-no");
+    var yesbtn = document.getElementById(newid+"-yes");
+
+       nobtn.classList.add("active");
+       yesbtn.classList.remove("active");
+    var row = document.getElementById(newid);
+
+       row.classList.add("cantdo");
+       row.classList.remove("cando");
+
+       for (var i = 0; i < cando.length; i++){
+        var t = cando[i].split(" ").join("");
+        t = t.split("'").join("");
+        if (t == newid){
+            cando.splice(i,1);
+            break;
+        }
+    
+       }
+       
+   }
+
+   if (e.className && e.className.indexOf('yesbtn') != -1 && e.className.indexOf('active') == -1) {
+    var newlength = length - 4;
+    var newid = id.substr(0,newlength);
+    var yesbtn = document.getElementById(newid+"-yes");
+    var nobtn = document.getElementById(newid+"-no");
+    var row = document.getElementById(newid);
+
+       yesbtn.classList.add("active");
+       nobtn.classList.remove("active");
+       row.classList.add("cando");
+       row.classList.remove("cantdo");
+
+
+
+       for (var i = 0; i < TreatmentList.length; i++){
+        var t = TreatmentList[i].treatment.split(" ").join("");
+        t = t.split("'").join("");
+        if (t == newid){
+            cando.push(TreatmentList[i].treatment);
+            break;
+        }
+    
+       }
+}
+}
+
+function OnSubmit(){
+    $.ajax({
+    type: 'POST',
+    url: '/'+admin_id+'/employees/employee_info/edit_treatments',
+    data: JSON.stringify({
+        TreatmentList: cando,
+        Hairdresser: ChosenHairdresser
+    }),
+     contentType: "application/json",
+    success: function (data,textStatus, jqXHR) {
+        window.location = data.redirect;
+        
+    },
+    error: (err)=>{console.log("error");}
+});
+}
+
+</script>
+</body>

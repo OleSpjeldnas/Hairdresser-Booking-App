@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Date Picker</title>
+    <link rel ="stylesheet" href = "../dist/css/when.min.css">
+    <link rel = "stylesheet" type = "text/css" href="../css/appointment-picker.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<h1 id ="successful">You have succesfully edited the work schedule</h1>
+<div class = "container">
+    <form  method="POST" >
+
+        <div class = "form-group row">
+            <div class="col-sm-4"></div><select id = "hairdressers" class="form-control col-sm-4"></select> 
+            <div class="col-sm-4"></div></div>
+
+            <div class ="form-group row">
+              <p class="col-sm-2"><b>Day:</b></p><p class="col-sm-1"><b>Not Working:</b></p><div class="col-sm-1"></div>
+              <p class="col-sm-3"><b>Start Time:</b><div class="col-sm-1"></div></p><p class="col-sm-3"><b>End Time:</b></p>
+            
+            </div>
+
+            <div class="form-group row">
+                <label for="notworking-mon" class="col-sm-3">Monday:</label>
+                <div class="form-check col-sm-1">
+                <input type="checkbox" class="form-check-input" id="notworking-mon" onchange="NotWorkingMon()"></div>
+                <input type="text" id ="timepicker-mon1" class="col-sm-3">
+                <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-mon2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for="timepicker-tue1" class="col-sm-3">Tuesday:</label>
+                <div class="form-check col-sm-1">
+                  <input type="checkbox" class="form-check-input" onchange="NotWorkingTue()" id="notworking-tue"></div>
+                  <input type="text" id ="timepicker-tue1" class="col-sm-3">
+                  <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-tue2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for="timepicker-wed1" class="col-sm-3">Wednesday:</label>
+                <div class="form-check col-sm-1">
+                  <input type="checkbox" class="form-check-input" onchange="NotWorkingWed()"id="notworking-wed"></div>
+                  <input type="text" id ="timepicker-wed1" class="col-sm-3">
+                  <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-wed2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for="timepicker-thu1" class="col-sm-3">Thursday:</label>
+                <div class="form-check col-sm-1">
+                  <input type="checkbox" class="form-check-input" onchange="NotWorkingThu()" id="notworking-thu"></div>
+                  <input type="text" id ="timepicker-thu1" class="col-sm-3">
+                  <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-thu2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for="timepicker-fri1" class="col-sm-3">Friday:</label>
+                <div class="form-check col-sm-1">
+                  <input type="checkbox" class="form-check-input"onchange="NotWorkingFri()" id="notworking-fri"></div>
+                  <input type="text" id ="timepicker-fri1"  class="col-sm-3">
+                  <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-fri2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for="timepicker-sat1" class="col-sm-3">Saturday:</label>
+                <div class="form-check col-sm-1">
+                  <input type="checkbox" class="form-check-input" onchange="NotWorkingSat()" id="notworking-sat"></div>
+                  <input type="text" id ="timepicker-sat1" class="col-sm-3">
+                  <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-sat2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group row">
+                <label for="timepicker-sun1" class="col-sm-3">Sunday:</label>
+                <div class="form-check col-sm-1">
+                  <input type="checkbox" class="form-check-input" onchange="NotWorkingSun()" id="notworking-sun"></div>
+                  <input type="text" id ="timepicker-sun1" class="col-sm-3">
+                  <div class="col-sm-1"></div>
+                <input type="text" id ="timepicker-sun2" class="col-sm-3">
+                <div class="col-sm-1"></div>
+            </div>
+
+        <div class="form-group row">
+            <div class="col-sm-5"></div><input type="submit" class="btn btn-primary col-sm-2"><div class="col-sm-5"></div>
+        </div>
+
+</form></div>
+
+<%- include ('./models/footer'); %>
+<script src="/js/appointment-picker.js"></script>
+
+<script>
+var all_hairdressers = <%- JSON.stringify(all_hairdressers || null) %>,
+    OpenClose        = <%- JSON.stringify(OpenClose || null) %>,
+    bool             = <%- JSON.stringify(bool || null) %>;
+
+    var hairdressers = $("#hairdressers"); 
+
+window.onload = function(){
+    AddHairdressersToDropdown();
+    if (!bool){
+      $("#successful").hide();
+    }
+    else {
+      $("#successful").show();
+    }
+}
+
+
+var ChosenHairdresser = all_hairdressers[0].employee_id;
+$("form").submit(function(e){
+    e.preventDefault();
+    onsubmit();
+})
+
+hairdressers.on("change", function(){
+    ChosenHairdresser = this.value;
+    $('input').val('');
+    
+    var checkboxes = document.getElementsByTagName('input'), val = null;    
+     for (var i = 0; i < checkboxes.length; i++)
+     {
+         if (checkboxes[i].type == 'checkbox')
+         {
+             checkboxes[i].checked = null;
+         }
+         else if (checkboxes[i].type == 'text'){
+           checkboxes[i].style.display = 'block';
+         }
+     }
+})
+
+function AddHairdressersToDropdown() {
+
+    for (let i = 0; i < all_hairdressers.length; i++){
+  var $option = $("<option/>", {
+    value: all_hairdressers[i].employee_id,
+    text: all_hairdressers[i].first_name + " " + all_hairdressers[i].last_name
+  });
+  hairdressers.append($option);
+}
+    }
+
+    // Timepickers for every start and end date
+var pickermon1 = new AppointmentPicker(document.getElementById('timepicker-mon1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickermon2 = new AppointmentPicker(document.getElementById('timepicker-mon2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickertue1 = new AppointmentPicker(document.getElementById('timepicker-tue1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickertue2 = new AppointmentPicker(document.getElementById('timepicker-tue2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerwed1 = new AppointmentPicker(document.getElementById('timepicker-wed1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerwed2 = new AppointmentPicker(document.getElementById('timepicker-wed2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerthu1 = new AppointmentPicker(document.getElementById('timepicker-thu1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerthu2 = new AppointmentPicker(document.getElementById('timepicker-thu2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerfri1 = new AppointmentPicker(document.getElementById('timepicker-fri1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerfri2 = new AppointmentPicker(document.getElementById('timepicker-fri2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersat1 = new AppointmentPicker(document.getElementById('timepicker-sat1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersat2 = new AppointmentPicker(document.getElementById('timepicker-sat2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersun1 = new AppointmentPicker(document.getElementById('timepicker-sun1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersun2 = new AppointmentPicker(document.getElementById('timepicker-sun2'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+
+function onsubmit(){
+
+  
+    if (
+    pickermon1.picker != null &&
+    pickermon2.picker != null &&
+    pickertue1.picker != null &&
+    pickertue2.picker != null &&
+    pickerwed1.picker != null &&
+    pickerwed2.picker != null &&
+    pickerthu1.picker != null &&
+    pickerthu2.picker != null &&
+    pickerfri1.picker != null &&
+    pickerfri2.picker != null &&
+    pickersat1.picker != null &&
+    pickersat2.picker != null &&
+    pickersun1.picker != null &&
+    pickersun2.picker != null){
+        
+        var Monday    = [pickermon1,pickermon2];
+        var Tuesday   = [pickertue1,pickertue2];
+        var Wednesday = [pickerwed1,pickerwed2];
+        var Thursday  = [pickerthu1,pickerthu2];
+        var Friday    = [pickerfri1,pickerfri2];
+        var Saturday  = [pickersat1,pickersat2];
+        var Sunday    = [pickersun1,pickersun2];
+        var Weekdays =  [Monday, Tuesday, Wednesday,Thursday, Friday, Saturday, Sunday];
+
+        var weekdays = new Array();
+
+        for (var i = 0; i < 7; i++){
+          console.log(Weekdays[i][0].getTime().h);
+          if (Weekdays[i][0].getTime().h < Weekdays[i][1].getTime().h){
+              var start_time = Weekdays[i][0].getTime().h;
+              var end_time   = Weekdays[i][1].getTime().h;
+
+              weekdays.push([start_time,end_time]);
+
+
+          }
+          else{
+            weekdays.push(0);
+          }
+        }
+        
+        $.ajax({
+        type: 'POST',
+        url: '/workhours',
+        data: JSON.stringify({
+            Weekdays: weekdays,
+            Hairdresser: ChosenHairdresser
+        }),
+         contentType: "application/json",
+        success: function (data,textStatus, jqXHR) {
+            console.log("Hurray");
+        },
+        error: (err)=>{console.log("error");}
+    })
+        
+    }
+    else {
+        console.log("that's not it");
+    }
+}
+
+var notworkingmon = false;
+var notworkingtue = false;
+var notworkingwed = false;
+var notworkingthu = false;
+var notworkingfri = false;
+var notworkingsat = false;
+var notworkingsun = false;
+
+function NotWorkingMon(){
+notworkingmon = !notworkingmon;
+
+if (notworkingmon){
+  $("#timepicker-mon1").hide();
+  $("#timepicker-mon2").hide();
+  pickermon1.setTime("12:00");
+  pickermon2.setTime("12:00");
+  pickermon1.picker = "12:00";
+  pickermon2.picker = "12:00";
+}
+else {
+  pickermon1.picker = null;
+  pickermon2.picker = null;
+  pickermon1.setTime("");
+  pickermon2.setTime("");
+  $("#timepicker-mon1").show();
+  $("#timepicker-mon2").show();
+}
+}
+function NotWorkingTue(){
+notworkingtue = !notworkingtue;
+
+if (notworkingtue){
+  $("#timepicker-tue1").hide();
+  $("#timepicker-tue2").hide();
+  pickertue1.setTime("12:00");
+  pickertue2.setTime("12:00");
+  pickertue1.picker = "12:00";
+  pickertue2.picker = "12:00";
+}
+else {
+  pickertue1.picker = null;
+  pickertue2.picker = null;
+  pickertue1.setTime("");
+  pickertue2.setTime("");
+  $("#timepicker-tue1").show();
+  $("#timepicker-tue2").show();
+}
+}
+
+function NotWorkingWed(){
+notworkingwed = !notworkingwed;
+
+if (notworkingwed){
+  $("#timepicker-wed1").hide();
+  $("#timepicker-wed2").hide();
+  pickerwed1.setTime("12:00");
+  pickerwed2.setTime("12:00");
+  pickerwed1.picker = "12:00";
+  pickerwed2.picker = "12:00";
+}
+else {
+  pickerwed1.picker = null;
+  pickerwed2.picker = null;
+  pickerwed1.setTime("");
+  pickerwed2.setTime("");
+  $("#timepicker-wed1").show();
+  $("#timepicker-wed2").show();
+}
+}
+function NotWorkingThu(){
+notworkingthu = !notworkingthu;
+
+if (notworkingthu){
+  $("#timepicker-thu1").hide();
+  $("#timepicker-thu2").hide();
+  pickerthu1.setTime("12:00");
+  pickerthu2.setTime("12:00");
+  pickerthu1.picker = "12:00";
+  pickerthu2.picker = "12:00";
+}
+else {
+  pickerthu1.picker = null;
+  pickerthu2.picker = null;
+  pickerthu1.setTime("");
+  pickerthu2.setTime("");
+  $("#timepicker-thu1").show();
+  $("#timepicker-thu2").show();
+}
+}
+function NotWorkingFri(){
+notworkingfri = !notworkingfri;
+
+if (notworkingfri){
+  $("#timepicker-fri1").hide();
+  $("#timepicker-fri2").hide();
+  pickerfri1.setTime("12:00");
+  pickerfri2.setTime("12:00");
+  pickerfri1.picker = "12:00";
+  pickerfri2.picker = "12:00";
+}
+else {
+  pickerfri1.picker = null;
+  pickerfri2.picker = null;
+  pickerfri1.setTime("");
+  pickerfri2.setTime("");
+  $("#timepicker-fri1").show();
+  $("#timepicker-fri2").show();
+}
+}
+function NotWorkingSat(){
+notworkingsat = !notworkingsat;
+
+if (notworkingsat){
+  $("#timepicker-sat1").hide();
+  $("#timepicker-sat2").hide();
+  pickersat1.setTime("12:00");
+  pickersat2.setTime("12:00");
+  pickersat1.picker = "12:00";
+  pickersat2.picker = "12:00";
+}
+else {
+  pickersat1.picker = null;
+  pickersat2.picker = null;
+  pickersat1.setTime("");
+  pickersat2.setTime("");
+  $("#timepicker-sat1").show();
+  $("#timepicker-sat2").show();
+}
+}
+function NotWorkingSun(){
+notworkingsun = !notworkingsun;
+
+if (notworkingsun){
+  $("#timepicker-sun1").hide();
+  $("#timepicker-sun2").hide();
+  pickersun1.setTime("12:00");
+  pickersun2.setTime("12:00");
+  pickersun1.picker = "12:00";
+  pickersun2.picker = "12:00";
+}
+else {
+  pickersun1.picker = null;
+  pickersun2.picker = null;
+  pickersun1.setTime("");
+  pickersun2.setTime("");
+  $("#timepicker-sun1").show();
+  $("#timepicker-sun2").show();
+}
+}
+</script>
+
+
+</body>

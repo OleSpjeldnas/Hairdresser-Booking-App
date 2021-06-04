@@ -1,0 +1,25 @@
+<nav class="nav">
+    <div class="container">
+        <div class="logo">
+            <a href="<%= id %>">klip</a>
+        </div>
+        <div id="mainListDiv" class="main_list">
+            <ul class="navlinks">
+                <li><a href="<%= id %>/add_order">Add Order</a></li>
+                <li><a href="<%= id %>/employees">Employee Info</a></li>
+                <li><a href="<%= id %>/store_info" >Store Info</a></li>
+                <!-- <li><a href="#">Profile</a></li> -->
+                <form action="/logout?_method=DELETE" method="POST">
+                <li><button type="submit" id="logout" href="#">Log Out</button></li></form>
+            </ul>
+        </div>
+        <span class="navTrigger">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </div>
+  </nav>
+  
+  <section class="home">
+  </section>

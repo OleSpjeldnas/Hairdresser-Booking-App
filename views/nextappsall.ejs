@@ -1,0 +1,28 @@
+<%- include ('./models/header'); %>
+<div class="container">
+    <div class="panel-group">
+        <h4>All Your Upcoming Appointments</h4>  <ul class="list-group">
+        <% var k = Orders.length; for (var i = 0; i < k; i++){ %>
+          <% var date = new Date(Orders[i].datum); var hour = Orders[i].time_hour; var min; var person = Orders[i].employee_id; %>
+          <% if (Orders[i].time_minute){min = 20*Orders[i].time_minute;} else {min = "00";} %> 
+          <% for (var j = 0; j < all_hairdressers.length;j++){if (person == all_hairdressers[j].employee_id){ %>
+              <% person = all_hairdressers[j].first_name + " " + all_hairdressers[j].last_name; %> 
+          <% }} %>  
+          <% var datestring = date.getDate()+'.'+date.getMonth()+'.'+date.getFullYear(); %>
+          <div class="panel panel-default">
+              
+                  <li class="list-group-item" data-toggle="collapse" href="#collapse<%=i%>" >Hardresser: <strong><%= person %></strong> Date: <strong><%= datestring %></strong>
+                  Time: <strong><%= hour + ":" + min %></strong></li>
+               
+          
+              <div id="collapse<%=i%>" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>Type: <strong><%= Orders[i].treatment %></strong></p>
+              <p>Name: <strong>Gary</strong> </p><p>Phone Number: <strong>12345678</strong></p>
+              </div>
+              </div>
+            </div>
+          
+        <% } %></ul>
+      </div></div>
+<%- include ('./models/footer'); %>

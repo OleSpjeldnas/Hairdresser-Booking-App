@@ -1,0 +1,25 @@
+<%- include ('./models/header'); %>
+<div class="container">
+    <div class="panel-group">
+        <h4>All Your Upcoming Appointments</h4>  <ul class="list-group">
+        <% var k = relevantOrders.length; for (var i = 0; i < k; i++){ %>
+          <% var date = new Date(relevantOrders[i].datum); var hour = relevantOrders[i].time_hour; var min; %>
+          <% if (relevantOrders[i].time_minute){min = 20*relevantOrders[i].time_minute;} else {min = "00";} %>  
+          <% var datestring = date.getDate()+'.'+date.getMonth()+'.'+date.getFullYear(); %>
+          <div class="panel panel-default">
+              
+                  <li class="list-group-item" data-toggle="collapse" href="#collapse<%=i%>" >Date: <strong><%= datestring %></strong>
+                  Time: <strong><%= hour + ":" + min %></strong></li>
+               
+          
+              <div id="collapse<%=i%>" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>Type: <strong><%= relevantOrders[i].treatment %></strong></p>
+              <p>Name: <strong>Gary</strong> </p><p>Phone Number: <strong>12345678</strong></p>
+              </div>
+              </div>
+            </div>
+          
+        <% } %></ul>
+      </div></div>
+<%- include ('./models/footer'); %>

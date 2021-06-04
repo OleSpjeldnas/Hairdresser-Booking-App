@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/edit_treatments.css">
+    <base href="/">
+  
+   </head>
+<body>
+    <%- include('./models/nav'); %>
+  <h1 >Edit or Remove Current Treatments</h1>
+  <div id="main">
+  <div id="treatments">
+
+</div>
+<h1>Add New Treatment</h1>
+<div id="addnew" class="row">
+<label  id = "namelabel"for="new_name" class="col-sm-2">Name:</label>
+<input type="text" name="new_name" class="col-sm-2" id="new_name">
+<label id="new_price_label" for="price" class="col-sm-1">Price:</label>
+<input type="text" name="price" class="col-sm-1" id="new_price">
+<p class="col-sm-1">CHF</p>
+<label id="new_duration_label" for="new_duration" class="col-sm-2">Duration:</label>
+<select name="new_duration" id="new_duration" class="col-sm-2">
+</select>
+<button onclick="AddNew()" id="addbtn" class="col-sm-1"><i class="fas fa-plus"></i></button>
+</div>
+<button id="submit" onclick="OnSubmit()">Save Changes</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+ 
+<script>
+    var TreatmentList   = <%- JSON.stringify(TreatmentList || null) %>,
+        admin_id        = <%- JSON.stringify(id || null) %>;
+
+        var treatments = document.getElementById("treatments");
+        var temp_name;
+        var oldtreatment;
+        var temp_price;
+        var temp_duration;
+
+        $(window).scroll(function() {
+      if ($(document).scrollTop() > 400) {
+          $('.nav').addClass('affix');
+      } else {
+          $('.nav').removeClass('affix');
+      }
+  });
+        window.onload = function(){
+            addToSelect(new_duration,6);
+            TreatmentList.forEach(element => {
+                addTreatmentToList(element);
+                
+            });
+            HideAll();
+
+        }
+// Add treatment to list
+function addTreatmentToList(treatment){
+    var t = treatment.treatment.split(" ").join("");
+        t = t.split("'").join("");
+    
+    var row = document.createElement("div");
+        row.classList.add("row");
+        row.classList.add("list-element");
+        row.classList.add("toggle-1");
+        row.setAttribute("id", "toggle"+t+"1");
+        
+    var namelabel = document.createElement("label");
+        namelabel.innerHTML = "Name:"
+        namelabel.setAttribute("for",t+"-name");
+        namelabel.classList.add("col-sm-2");
+
+    var name = document.createElement("p");
+        name.innerHTML = treatment.treatment;
+        name.setAttribute("id",t+"-name");
+        name.classList.add("col-sm-2");
+
+    var pricelabel = document.createElement("label");
+        pricelabel.innerHTML = "Price:"
+        pricelabel.setAttribute("for",treatment.treatment+"-price");
+        pricelabel.classList.add("col-sm-1");
+
+    var price = document.createElement("p");
+        price.innerHTML = treatment.price + " CHF";
+        price.setAttribute("name",treatment.treatment+"-price");
+        price.classList.add("col-sm-2");
+
+    var durationlabel = document.createElement("label");
+        durationlabel.innerHTML = "Duration:"
+        durationlabel.setAttribute("for",treatment.treatment+"-duration");
+        durationlabel.setAttribute("for",treatment.treatment+"-duration");
+        durationlabel.classList.add("col-sm-2");
+
+    var duration = document.createElement("p");
+        duration.setAttribute("name",treatment.treatment+"-duration");
+        duration.classList.add("col-sm-2");
+        duration.innerHTML = 20*treatment.duration + " minutes";
+
+    var editbtn = document.createElement("button");
+        editbtn.classList.add("col-sm-1");
+        editbtn.classList.add("editbtn");
+        editbtn.setAttribute("id",t+"-edit");
+
+    var emoji = document.createElement("i");
+        emoji.classList.add("far");
+        emoji.classList.add("fa-edit");
+        emoji.classList.add("fa-md");
+        editbtn.appendChild(emoji);
+
+        row.appendChild(namelabel);
+        row.appendChild(name);
+
+        row.appendChild(pricelabel);
+        row.appendChild(price);
+
+        row.appendChild(durationlabel);
+        row.appendChild(duration);
+        row.appendChild(editbtn);
+
+    var row1 = document.createElement("div");
+        row1.classList.add("row");
+        row1.classList.add("list-element");
+        row1.classList.add("toggle-2");
+        row1.setAttribute("id", "toggle"+t+"2");
+
+    var namelabel1 = document.createElement("label");
+        namelabel1.innerHTML = "Name: "
+        namelabel1.setAttribute("for",treatment.treatment+"-name1");
+        namelabel1.classList.add("col-sm-2");
+        namelabel1.classList.add("namelabel");
+
+    var name1 = document.createElement("input");
+        name1.setAttribute("type", "text");
+        name1.setAttribute("value", treatment.treatment);
+
+        name1.setAttribute("name",treatment.treatment+"-name1");
+        name1.setAttribute("id",t+"-name1");
+        name1.classList.add("col-sm-2");
+        namelabel1.classList.add("name");
+
+    var pricelabel1 = document.createElement("label");
+        pricelabel1.setAttribute("for",treatment.treatment+"-price1");
+        pricelabel1.innerHTML = "Price:";
+        pricelabel1.classList.add("col-sm-1");
+        namelabel1.classList.add("pricelabel");
+
+    var price1 = document.createElement("input");
+        price1.setAttribute("value", treatment.price);
+        price1.setAttribute("type", "text");
+        price1.setAttribute("id",t+"-price1");
+        price1.setAttribute("name",treatment.treatment+"-price1");
+        price1.classList.add("col-sm-1");
+        namelabel1.classList.add("price");
+
+    var chf = document.createElement("p");
+        chf.innerHTML = "CHF";
+        chf.classList.add("col-sm-1");
+    
+    var durationlabel1 = document.createElement("label");
+        durationlabel1.setAttribute("for",treatment.treatment+"-duration1");
+        durationlabel1.classList.add("col-sm-2");
+        durationlabel1.innerHTML = "Duration:";
+        durationlabel1.classList.add("durationlabel");
+
+    var duration1 = document.createElement("select");
+        duration1.setAttribute("id",t+"-duration1");
+        duration1.setAttribute("name",treatment.treatment+"-duration1");
+        duration1.classList.add("col-sm-2");
+    
+        addToSelect(duration1,6);
+
+
+    var cancelbtn = document.createElement("button");
+        cancelbtn.classList.add("cancelbtn");
+        cancelbtn.setAttribute("id",t+"-cancel");
+
+    var emojii = document.createElement("i");
+        emojii.classList.add("fas");
+        emojii.classList.add("fa-times");
+        cancelbtn.appendChild(emojii);
+
+    var addeditbtn = document.createElement("button");
+        addeditbtn.classList.add("addeditbtn");
+        addeditbtn.setAttribute("id",t+"-addedit");
+
+    var emo = document.createElement("i");
+        emo.classList.add("fas");
+        emo.classList.add("fa-check");
+        addeditbtn.appendChild(emo);
+    
+    var deletebtn = document.createElement("button");
+        deletebtn.classList.add("deletebtn");
+        deletebtn.setAttribute("id",t+"-delete");
+
+    var emo2 = document.createElement("i");
+        emo2.classList.add("fas");
+        emo2.classList.add("fa-minus");
+        deletebtn.appendChild(emo2);
+
+        row1.appendChild(namelabel1);
+        row1.appendChild(name1);
+
+        row1.appendChild(pricelabel1);
+        row1.appendChild(price1);
+        row1.appendChild(chf);
+
+        row1.appendChild(durationlabel1);
+        row1.appendChild(duration1);
+        row1.appendChild(deletebtn);
+        row1.appendChild(cancelbtn);
+        row1.appendChild(addeditbtn);
+    
+    var row3 = document.createElement("div");
+        row3.classList.add("row");
+        row3.classList.add("list-element");
+        row3.classList.add("toggle-3");
+        row3.setAttribute("id", "toggle"+t+"3");
+
+    var sure = document.createElement("p");
+        sure.classList.add("col-sm-10");
+        sure.classList.add("sure");
+        sure.innerHTML = "Are you sure that you want to delete this treatment?"
+
+    var no_delete_btn = document.createElement("button");
+        no_delete_btn.classList.add("no_delete_btn");
+        no_delete_btn.setAttribute("id",t+"-no_delete");
+        no_delete_btn.classList.add("col-sm-1");
+
+    var emojii = document.createElement("i");
+        emojii.classList.add("fas");
+        emojii.classList.add("fa-times");
+        no_delete_btn.appendChild(emojii);
+
+    var yes_delete_btn = document.createElement("button");
+        yes_delete_btn.classList.add("yes_delete_btn");
+        yes_delete_btn.classList.add("col-sm-1");
+        yes_delete_btn.setAttribute("id",t+"-yes_delete");
+
+    var emo = document.createElement("i");
+        emo.classList.add("fas");
+        emo.classList.add("fa-check");
+        yes_delete_btn.appendChild(emo);
+        row3.appendChild(no_delete_btn);
+        row3.appendChild(sure);
+        row3.appendChild(yes_delete_btn);
+
+        treatments.appendChild(row);
+        treatments.appendChild(row1);
+        treatments.appendChild(row3);
+        }
+
+document.body.onclick = function(e) {  
+    
+     //when the document body is clicked
+    if (window.event) {
+        e = event.srcElement;           //assign the element clicked to e (IE 6-8)
+    }
+    else {
+        e = e.target;                   //assign the element clicked to e
+    }
+        var id = e.id;
+        var length = id.length;
+    if (e.className && e.className.indexOf('editbtn') != -1 && e.className.indexOf('addeditbtn') == -1) {
+        
+        var newlength = length - 5;
+        var newid = id.substr(0,newlength);
+
+        for (var i = 0; i < TreatmentList.length; i++){
+            if (document.getElementById(newid+"-name").innerHTML == TreatmentList[i].treatment){
+                oldtreatment = i;
+                break;
+            }
+        }
+
+        Toggle(newid,2);
+        
+    }
+    if (e.className && e.className.indexOf('cancelbtn') != -1) {
+
+        var newlength = length - 7;
+        var newid = id.substr(0,newlength);
+        Toggle(newid,1);
+    }
+    if (e.className && e.className.indexOf('addeditbtn') != -1) {
+
+        var newlength = length - 8;
+        var newid = id.substr(0,newlength);
+
+        temp_name = document.getElementById(newid+"-name1").value;
+        temp_price = document.getElementById(newid+"-price1").value;
+        temp_duration = parseInt(document.getElementById(newid+"-duration1").value);
+
+        var temp = {treatment: temp_name, price: temp_price, duration: temp_duration};
+        var newestid = temp.treatment.split(" ").join("");
+        newestid = newestid.split("'").join("");
+
+        TreatmentList[oldtreatment] = temp;
+       
+  const myNode = document.getElementById("treatments");
+  myNode.textContent = '';
+  TreatmentList.forEach(element => {
+                addTreatmentToList(element);
+                
+            });
+            HideAll();
+    }
+    if (e.className && e.className.indexOf('deletebtn') != -1) {
+
+        var newlength = length - 7;
+        var newid = id.substr(0,newlength);
+       
+        Toggle(newid,3);
+    }
+    if (e.className && e.className.indexOf('no_delete_btn') != -1) {
+
+        var newlength = length - 10;
+        var newid = id.substr(0,newlength);
+
+        Toggle(newid,1);
+}
+if (e.className && e.className.indexOf('yes_delete_btn') != -1) {
+
+var newlength = length - 11;
+var newid = id.substr(0,newlength);
+for (var i = 0; i < TreatmentList.length; i++){
+            if (document.getElementById(newid+"-name").innerHTML == TreatmentList[i].treatment){
+                TreatmentList.splice(i,1);
+
+                    removeElement("toggle"+newid+"1");
+                    removeElement("toggle"+newid+"2");
+                    removeElement("toggle"+newid+"3");
+                                                break;
+            }
+        }
+}
+
+}
+function Toggle(newidd, num){
+
+if (num ==1){
+    $("#toggle"+newidd+"2").hide();
+    $("#toggle"+newidd+"3").hide();
+    $("#toggle"+newidd+"1").show();}
+
+else if (num ==2){
+    $("#toggle"+newidd+"3").hide();
+    $("#toggle"+newidd+"1").hide();
+    $("#toggle"+newidd+"2").show();
+}
+else {
+
+    $("#toggle"+newidd+"3").show();
+    $("#toggle"+newidd+"1").hide();
+    $("#toggle"+newidd+"2").hide();
+}
+}
+function removeElement(elementId) {
+    // Removes an element from the document
+    var element = document.getElementById(elementId);
+    console.log(element);
+    if(element){
+    element.parentNode.removeChild(element);}
+}
+function HideAll(){
+    var t = new Array(TreatmentList.length);
+    for (var i = 0; i < TreatmentList.length; i++){
+        var t2 = TreatmentList[i].treatment.split(" ").join("");
+        t[i] = t2.split("'").join("");
+         Toggle(t[i],1);
+    }
+}
+
+function AddNew (){
+var new_name = document.getElementById("new_name").value;
+var new_price = parseInt(document.getElementById("new_price").value);
+var new_duration = parseInt(document.getElementById("new_duration").value);
+console.log(Number.isInteger(new_price));
+
+if (new_name && Number.isInteger(new_price)){
+
+var temp = {treatment: new_name, price: new_price, duration: new_duration};
+var newestid = temp.treatment.split(" ").join("");
+newestid = newestid.split("'").join("");
+
+TreatmentList.push(temp);
+addTreatmentToList(temp);
+Toggle(newestid,1);
+}
+document.getElementById("new_name").value = "";
+document.getElementById("new_price").value = "";
+}
+function addToSelect(select,num){
+    for (var i = 0; i < num; i++){
+        var opt = document.createElement("option");
+            opt.innerHTML = 20*(i+1) + " minutes"
+            opt.value     = i+1;
+        select.appendChild(opt);
+    }
+}
+
+function OnSubmit(){
+    $.ajax({
+    type: 'POST',
+    url: '/'+admin_id+'/store_info/edit_treatments',
+    data: JSON.stringify({
+        TreatmentList: TreatmentList
+    }),
+     contentType: "application/json",
+    success: function (data,textStatus, jqXHR) {
+        window.location = data.redirect;
+        
+    },
+    error: (err)=>{console.log("error");}
+});
+}
+
+</script>
+</body>

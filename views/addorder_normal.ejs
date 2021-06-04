@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Order</title>
+    <link rel ="stylesheet" href = "../../pickadate.js/lib/themes/default.css">
+    <link rel ="stylesheet" href = "../../pickadate.js/lib/themes/default.date.css">
+    <link rel = "stylesheet" type = "text/css" href="../../css/appointment-picker.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/addorder.css">
+    <link rel="stylesheet" href="../../css/navbar.css">
+   
+    <base href="/">
+</head>
+<body id="bod">
+    <nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="<%= id %>">Your Logo</a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="<%= id %>/add_order">Add Order</a></li>
+                    <!-- <li><a href="#">Profile</a></li> -->
+                    <form action="/logout?_method=DELETE" method="POST">
+                    <li><button type="submit" id="logout" href="#">Log Out</button></li></form>
+                </ul>
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+      </nav>
+      
+      <section class="home">
+      </section>
+  <h1>Add Order</h1>
+        <div class = "cont" id="form-container">
+    <form  method="POST" id="order_form" name="order_form">
+        <div class = "form-group">
+            <div class = "form-group row">
+                <div class = "col-sm-5"></div>
+                <label for = "duration" class = "col-sm-4 col-form-label" id="durlabel">Duration:</label>
+                <label for = "price" class = "col-sm-2 col-form-label" id="pricelabel">Price:</label>
+            </div>
+            <div class = "form-group row">
+        <select name = "Treatment" id = "treatments" class = "form-control col-sm-4">
+            <option value="Select treatment">Select treatment</option> </select>
+            <div class = "col-sm-1"></div>
+        <h3 id = "duration" class = "form-control col-sm-3"></h3>
+
+        <div class = "col-sm-1"></div>
+        <h3 id = "price" class = "form-control col-sm-2"></h3><div class="col-sm-1"></div>
+     
+    </div>
+    </div>
+    <div class = "form-group row">
+        <label for="Hairdresser" id="hairdresserlabel" class="col-sm-4">Choose Hairdresser:</label>
+    <select name = "Hairdresser" id = "hairdressers" class="form-control col-sm-4">
+        <option value="Any">Any</option>
+    </select></div>
+    <div class="form-group row" id="daterow">
+        <label for="Date" id="datelabel" class = "col-sm-2">Date:</label>
+        <input  name ="Date" id="datepicker" class="col-sm-3 calendar">
+        <label for="Time" id="timelabel" class = "col-sm-2">Time:</label>
+        <input name ="Time" id ="timepicker" class="col-sm-3">
+    
+        
+    </div>
+    
+    <div class = "row form-group">
+        <label for="firstname" id="firstnamelabel" class = "col-sm-2">First Name:</label>
+        
+        <input class = "col-sm-3" id="firstname" name="Firstname" type="text" maxlength="12">
+        
+        <label for="lastname" id="lastnamelabel" class = "col-sm-2">Last Name:</label>
+      
+        <input class = "col-sm-3" id="lastname" type="text"name="Lastname" maxlength="15">
+    </div>
+    
+    <div class="row form-group">
+    <label for ="email" id="emaillabel" class="col-sm-3">Email Address:</label> <div class = "col-sm-4">
+        <input id="email" name="email"  type="text"></div></div>
+        <div class="row form-group">
+        <label for ="phone" id = "phonelabel" class="col-sm-3">Phone Number:</label> <div class = "col-sm-4">
+            <input name="phone"  id="phone" type="text"></div>
+        
+    </div>
+    <!-- <div class = "row">
+    <div class = "col-sm-2"></div><p class ="col-sm-4 error" id ="Wrongphone">
+        Please enter a valid phone number
+    </p><div class="col-sm-6"></div>
+    </div> -->
+    
+    <div class ="form-group row">
+    <div class = "col-sm-4"></div>
+    <div class = "col-sm-4">
+    <input id="submit" type="submit"  class = "btn btn-primary" value="Place Order"></div>
+    <div class = "col-sm-4"></div></div>
+    </form>
+    </div>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="../../pickadate.js/lib/picker.js"></script>
+    <script src="../../pickadate.js/lib/picker.date.js"></script>
+    <script src="../../js/appointment-picker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+    
+    
+    <script> 
+        var Orders = <%- JSON.stringify(Orders || null) %>,
+            TreatmentList = <%- JSON.stringify(TreatmentList || null) %>,
+            Treatment_Hairdresser = <%- JSON.stringify(Treatment_Hairdresser || null) %>,
+            all_hairdressers = <%- JSON.stringify(all_hairdressers || null) %>,
+            DailySchedule = <%- JSON.stringify(DailySchedule || null) %>,
+            store_id = <%- JSON.stringify(store_id || null) %>,
+            OpenClose = <%- JSON.stringify(OpenClose || null) %>;
+    var id = <%- JSON.stringify(id || null) %>;
+           
+         
+    var TreatmentPriceList = new Array();
+    var TreatmentDurationList = new Array();
+    var TimesremovedToday = new Array();
+    var treatments = $("#treatments"); // List of offered treatments
+    var hairdressers = $("#hairdressers"); //List of hairdressers who can do given treatment
+    // var PossibleTimes = TotalTimes();
+    var RemovedTimes;
+    
+    var lastdate = LatestDate();
+    var end = Math.floor(lastdate.getTime() / (3600 * 24 * 1000));
+    var today = new Date();
+    var start = Math.floor(today.getTime() / (3600 * 24 * 1000));
+    var LengthOfDaysArray = end - start;
+    var AlreadyIn = new Array();
+    var RelevantHairdressers = new Array();
+    var disabledDays = new Array();
+    var from;
+    var to;
+    
+    var SubmitForm = document.getElementById("submit");
+    var Firstname = document.getElementById("firstname");
+    var Lastname = document.getElementById("lastname");
+    var Email = document.getElementById("email");
+    var Phone = document.getElementById("phone");
+    var TimesList = new Array();
+    var hairdressersArray = new Array();
+    var Times = new Array();
+    var activated = false;
+    var startendtimeperson = new Array();
+    var relevant = new Array();
+    var unavailable = new Array();
+
+var ChosenTreatment;
+var ChosenTreatmentPrice;
+var ChosenTreatmentDuration;
+var ChosenHairdresser;
+var ChosenDate;
+var ChosenTime;
+
+
+window.onload = function () {
+SortAndDeleteOpenClose();
+EditOpenClose();
+PopulateTreatmentList();
+PopulateTreatmentPriceDuration();
+}
+
+$("form").submit(function(e){
+    e.preventDefault();
+    onsubmit();
+});
+$(window).scroll(function() {
+      if ($(document).scrollTop() > 400) {
+          $('.nav').addClass('affix');
+      } else {
+          $('.nav').removeClass('affix');
+      }
+  });
+document.body.addEventListener('close.appo.picker', 
+function(e) { 
+    ChosenTime = e.displayTime;
+    document.getElementById("submit").style.display = "block";
+Firstname.style.display = "block";
+Lastname.style.display = "block";
+Email.style.display = "block";
+Phone.style.display = "block";
+document.getElementById("firstnamelabel").style.display = "block";
+document.getElementById("lastnamelabel").style.display = "block";
+document.getElementById("phonelabel").style.display = "block";
+document.getElementById("emaillabel").style.display = "block";
+    });
+//Adds all treatment types to list where the customer can pick.
+function PopulateTreatmentList() { 
+    if (TreatmentList.length){
+
+for (let i = 0; i < TreatmentList.length; i++){
+  var $option = $("<option/>", {
+    value: TreatmentList[i].treatment,
+    text: TreatmentList[i].treatment
+  });
+  treatments.append($option);
+};}
+}
+
+//Adds price list for treatments
+function PopulateTreatmentPriceDuration() { 
+
+for (let i = 0; i < TreatmentList.length; i++){
+
+    TreatmentPriceList.push(TreatmentList[i].price);
+    TreatmentDurationList.push(TreatmentList[i].duration);
+}}
+
+// Find hairdressers who can perform given treatment
+function HairdressersGivenTreatment (haircut) {
+    RelevantHairdressers = new Array();
+    var temp = new Array();
+        for (let i = 0; i < Treatment_Hairdresser.length; i++){
+           if (Treatment_Hairdresser[i].treatment_name == haircut)
+                
+           {temp.push(Treatment_Hairdresser[i].employee_id);}
+            
+        }
+        for (var i = 0; i < temp.length; i++){
+            for (var j = 0; j < all_hairdressers.length; j++){
+                if (temp[i] == all_hairdressers[j].employee_id){
+                    var name = all_hairdressers[j].first_name + " " + all_hairdressers[j].last_name;
+                    RelevantHairdressers.push({name: name, id: temp[i]});
+                }
+            }
+        }
+    }
+
+
+// Adds price and duration to display for chosen treatment
+treatments.on("change", function() {
+    hidefromstart();
+    $("#daterow").show();
+    if (this.value != "Select treatment"){
+        for (var i = 0; i<TreatmentList.length; i++){
+            if (TreatmentList[i].treatment == this.value){
+                ChosenTreatmentPrice = TreatmentList[i].price;
+                document.getElementById("duration").innerHTML = TreatmentList[i].duration*20 + " Minutes";
+                document.getElementById("price").innerHTML    = TreatmentList[i].price + " CHF";
+ChosenTreatmentDuration = TreatmentList[i].duration;
+ChosenTreatment = this.value;
+document.querySelectorAll('#hairdressers option').forEach(option => {if (option.text != "Any")
+{option.remove();}});
+HairdressersGivenTreatment(this.value);
+
+AddHairdressersToDropdown();
+
+            }}}});
+    
+// Changes available times based on changed hairdresser
+hairdressers.on("change",function(){
+    hidefromstart();
+    var PossibleTimes;
+    ChosenHairdresser = this.value;
+
+    if (RightPerson(this.value)) {
+        PossibleTimes = FindTimes(this.value, ChosenTreatmentDuration); 
+    disabledDays = DateUnavailable(PossibleTimes,ChosenTreatmentDuration); 
+   
+    refreshPickers();
+
+
+$('#datepicker').pickadate({
+  firstDay: 1,
+  min: new Date(),
+  max: OpenClose[OpenClose.length-1].datum,
+  disable:disabledDays,
+  clear: '',
+  
+format: 'd mmmm, yyyy',
+onSet: function(context) {
+    ChosenDate = new Date(context.select);
+    var num     = Math.floor(ChosenDate.getTime() / (3600 * 24 * 1000))+1-start;
+
+    if (num >= 0 && Array.isArray(RemovedTimes[num])){
+TimesremovedToday = RemovedTimes[num];
+;}
+
+
+for (var i = 0; i < ChosenTreatmentDuration; i++){
+    if (PossibleTimes[num].length-1-i > 0){
+    TimesremovedToday.push(PossibleTimes[num][PossibleTimes[num].length-1-i]);}
+}
+for( var i = 0; i < TimesremovedToday.length; i++){ if ( TimesremovedToday[i] === 0) { TimesremovedToday.splice(i, 1); i--; }}
+
+var num2 = PossibleTimes[num].length-1;
+var mintime = OpenClose[num].open_time;
+var maxtime = OpenClose[num].close_time;
+
+var picker = new AppointmentPicker(document.getElementById('timepicker'), {
+	interval: 20,
+	mode: '24h',
+    title: ' ',
+	minTime: startendtimeperson[num].start_time,
+	maxTime: startendtimeperson[num].end_time,
+	startTime: mintime,
+	endTime: maxtime,
+	disabled: TimesremovedToday,
+    leadingZero: true,
+    large: true
+});  
+
+picker.open();
+  }
+});
+
+}
+});
+//Find latest date for length of array
+function LatestDate(){
+    var latest = new Date(OpenClose[0].datum);
+    var latesttime = Math.floor(latest.getTime() / (3600 * 24 * 1000));
+    for (var i = 1; i < OpenClose.length; i++){
+        var challenger = new Date(OpenClose[i].datum);
+        var challengertime = Math.floor(challenger.getTime() / (3600 * 24 * 1000));
+        if (challengertime > latesttime){
+            latest = challenger;
+            latesttime = challengertime;
+        }
+    }
+
+return latest;}
+
+function refreshPickers(){
+    $("#datepicker").remove();
+$(".appo-picker").remove();
+
+var inp = document.createElement("input");
+        inp.classList.add("col-sm-3");
+        inp.classList.add("calendar");
+        inp.setAttribute("id","datepicker");
+        inp.setAttribute("name","Date");
+        // inp.style.cssText = "width:250px; padding-right:140px;display:inline-block";
+        // document.getElementById("datelabel").appendChild(inp); 
+        document.getElementById("datelabel").insertAdjacentElement('afterend',inp);
+}
+//Sort open close array from earliest to last 
+function SortAndDeleteOpenClose(){
+    var len = OpenClose.length;
+   for (var i = len-1; i>=0; i--){
+     for(var j = 1; j <= i; j++){
+        var day1 = new Date(OpenClose[j-1].datum);
+        var num1 = Math.floor(day1.getTime() / (3600 * 24 * 1000));
+        var day2 = new Date(OpenClose[j].datum);
+        var num2 = Math.floor(day2.getTime() / (3600 * 24 * 1000));
+       if(num2 < num1){
+           var temp = OpenClose[j-1];
+           OpenClose[j-1] = OpenClose[j];
+           OpenClose[j] = temp;
+        }
+     }
+   }
+   for (var i = 0; i < OpenClose.length; i++){
+    var day1 = new Date(OpenClose[i].datum);
+        var num1 = Math.floor(day1.getTime() / (3600 * 24 * 1000));
+        var diff = num1 - start;
+        if (diff < 0){
+            OpenClose.shift();
+        }
+        else {return;}
+   }
+}
+
+//Edit OpenClose array by adding 
+function EditOpenClose() {
+    var OpenClose1 = new Array();
+    // var lastday    = new Date(OpenClose[OpenClose.length-1].datum);
+    // var length     = end1 - start;
+    var first      = today;
+    var next       = new Date(OpenClose[0].datum);
+    var nexxt      = Math.floor(next.getTime() / (3600 * 24 * 1000));
+    var diff;
+    var temp       = new Date();
+    if (nexxt - start > 0){
+        OpenClose1.push({datum: temp, open_time: 0, close_time: 0});}
+
+        if (nexxt - start > 1){
+    for (var i = 0; i < nexxt - start-1; i++){
+        first.setDate(first.getDate()+1);
+        temp = new Date(first);
+        OpenClose1.push({datum: temp, open_time: 0, close_time: 0});
+    }}
+    OpenClose1.push({datum: new Date(OpenClose[0].datum), open_time: OpenClose[0].open_time, close_time: OpenClose[0].close_time});
+    for (var i = 1; i < OpenClose.length; i++){
+        first  = new Date(OpenClose[i-1].datum);
+        firsst = Math.floor(first.getTime() / (3600 * 24 * 1000));
+        next   = new Date(OpenClose[i].datum);
+        nexxt  = Math.floor(next.getTime() / (3600 * 24 * 1000));
+        diff = nexxt - firsst;
+        if (diff > 1){
+            
+        for (var j = 0; j < nexxt - firsst-1; j++){
+            first.setDate(first.getDate()+1);
+            temp = new Date(first);
+            OpenClose1.push({datum: temp, open_time: 0, close_time: 0})
+        }}
+        OpenClose1.push({datum: new Date(OpenClose[i].datum), open_time: OpenClose[i].open_time, close_time: OpenClose[i].close_time});
+    }
+    OpenClose = OpenClose1;
+}
+// For chosen treatment, add hairdressers from array to dropdown
+function AddHairdressersToDropdown() {
+    if (RelevantHairdressers.length > 0){
+    for (let i = 0; i < RelevantHairdressers.length; i++){
+  var $option = $("<option/>", {
+    value: RelevantHairdressers[i].id,
+    text: RelevantHairdressers[i].name
+  });
+
+  hairdressers.append($option);
+}}
+    }
+
+// Sort work schedules by date
+function SortAndDeleteWorkSchedule(arr){
+    var len = arr.length;
+   for (var i = len-1; i>=0; i--){
+     for(var j = 1; j <= i; j++){
+        var day1 = new Date(arr[j-1].date);
+        var num1 = Math.floor(day1.getTime() / (3600 * 24 * 1000));
+        var day2 = new Date(arr[j].date);
+        var num2 = Math.floor(day2.getTime() / (3600 * 24 * 1000));
+       if(num2 < num1){
+           var temp = arr[j-1];
+           arr[j-1] = arr[j];
+           arr[j] = temp;
+        }
+     }
+   }
+   for (var i = 0; i < arr.length; i++){
+    var day1 = new Date(arr[i].date);
+        var num1 = Math.floor(day1.getTime() / (3600 * 24 * 1000));
+        var diff = num1 - start;
+        if (diff < 0){
+            arr.shift();
+        }
+        else {return;}
+   }
+}
+// Find total work hours for given hairdresser on given day
+function DailyScheduleOf (id) {
+
+if(RightPerson(id)){
+    startendtimeperson = new Array();
+    var date = new Date();
+    var schedule = new Array();
+    //First find i such that DailySchedule[i] is the schedule of person with id
+for (var i = 0; i < DailySchedule.length; i++) {
+    if (id == DailySchedule[i][0]) {
+        var dates = new Array(DailySchedule[i].length-1);
+        //Now iterate through schedule of i'th person
+        for (var j = 1; j < DailySchedule[i].length; j++){
+            
+        dates[j-1] = new Date();
+        dates[j-1].setDate(date.getDate() + j - 1);
+        if (parseInt(DailySchedule[i][j].end_time) - parseInt(DailySchedule[i][j].start_time) > 0){
+        schedule.push({date:dates[j-1], start_time: parseInt(DailySchedule[i][j].start_time), end_time: parseInt(DailySchedule[i][j].end_time)});
+        startendtimeperson.push({id: id, start_time: parseInt(DailySchedule[i][j].start_time), end_time: parseInt(DailySchedule[i][j].end_time)});
+        // endtimeperson.push(parseInt(DailySchedule[i][j].end_time));
+    }
+    else {schedule.push({date:dates[j-1], start_time: 0, end_time: 0});
+    startendtimeperson.push({id: id, start_time: 0, end_time: 0});
+        }
+        // date.setDa
+    }}}
+    
+return schedule;}}
+
+//Returns true if person is a hairdresser
+function RightPerson(id) {
+for (var i = 0; i < all_hairdressers.length; i++){
+    if (id == all_hairdressers[i].employee_id)
+    {
+        return true;}
+}
+return false;
+}
+//Find total times without considering bookings [day][hour + :00/:20/:40]
+function TotalTimes(id){
+    if (id == "Any") {
+        return TotalTimesAny();
+    }
+ else if (RightPerson(id)){
+    var Appointments = new Array();
+    var schedule = DailyScheduleOf(id);
+    SortAndDeleteWorkSchedule(schedule);
+    
+    var j = 0;
+    for (var i = 0; i < OpenClose.length; i++){
+        var num1 = 0;
+        if (j < schedule.length){
+            num1 = Math.floor(schedule[j].date.getTime() / (3600 * 24 * 1000));}
+        var num2 = Math.floor(OpenClose[i].datum.getTime() / (3600 * 24 * 1000));
+        var diff = num2 - num1;
+        if(!diff){
+            Appointments.push(schedule[j]);
+            j++;
+        }
+        else {
+            Appointments.push(0);
+        }
+
+    }
+
+    var Appointments1 = new Array(Appointments.length-1);
+        RemovedTimes  = new Array(Appointments.length-1);
+for (var i = 0; i < Appointments.length; i++){
+    if (Appointments[i].start_time < Appointments[i].end_time){
+        var TimeOpen = Appointments[i].end_time - Appointments[i].start_time;
+        var TimeHour = new Array(TimeOpen-1);
+        TimeHour[0]  = Appointments[i].start_time;
+        Appointments1[i] = new Array(3*TimeOpen+1);
+        RemovedTimes[i] = new Array();
+        Appointments1[i][0] = Appointments[i].start_time + ":00";
+        Appointments1[i][1] = Appointments[i].start_time + ":20";
+        Appointments1[i][2] = Appointments[i].start_time + ":40";
+        for (let j = 1; j < TimeOpen; j++){
+            TimeHour[j] = TimeHour[0] + j;
+            Appointments1[i][3*j]   = TimeHour[j]  + ":00";
+            Appointments1[i][3*j+1] = TimeHour[j]  + ":20";
+            Appointments1[i][3*j+2] = TimeHour[j]  + ":40";
+    }
+    Appointments1[i][Appointments1[i].length-1] = Appointments[i].end_time+":00";
+}
+else {
+    Appointments1[i] = 0;
+    RemovedTimes[i]  = "All day";
+}
+} 
+
+return Appointments1;}}
+
+// Edits total times array by setting taken times to 0
+function FindTimes(id,dura){
+
+if (RightPerson(id)){
+    var times = TotalTimes(id);
+    
+        for (let i = 0; i < Orders.length; i++){
+        if (Orders[i].employee_id == id){
+            // console.log(Orders[i]);
+        var dur = Orders[i].duration;
+        var date = new Date(Orders[i].datum);
+        var num1 = Math.floor(date.getTime() / (3600 * 24 * 1000));
+        var HowManyDaysFromToday = num1 - start;
+        // console.log(HowManyDaysFromToday);
+
+            if (HowManyDaysFromToday >= 0 && Array.isArray(times[HowManyDaysFromToday])) {
+            for (let k = 0; k < times[HowManyDaysFromToday].length; k++) { 
+                // console.log(times[HowManyDaysFromToday][k] + " and " + Orders[i].time_hour + ":00");
+                if      (Orders[i].time_minute == 0 && times[HowManyDaysFromToday][k] == Orders[i].time_hour + ":00"){
+                    if (dura > 1){
+                    for (var s = 0; s < dura-1; s++){
+                        if (k >s){
+                RemovedTimes[HowManyDaysFromToday].push(times[HowManyDaysFromToday][k-s-1]);}
+
+                    }}
+                    
+                // console.log(times[HowManyDaysFromToday]);
+                    for (var j = 0; j < dur; j++){
+                RemovedTimes[HowManyDaysFromToday].push(times[HowManyDaysFromToday][k+j]);
+                times[HowManyDaysFromToday][k+j] = 0;
+              }}
+                else if (Orders[i].time_minute == 1 && times[HowManyDaysFromToday][k] == Orders[i].time_hour + ":20"){ 
+                    if (dura > 1){
+                    for (var s = 0; s < dura-1; s++){if (k >s){
+                RemovedTimes[HowManyDaysFromToday].push(times[HowManyDaysFromToday][k-s-1]);}
+
+                    }} 
+                // console.log(times[HowManyDaysFromToday]); 
+                     for (var j = 0; j < dur; j++){
+                RemovedTimes[HowManyDaysFromToday].push(times[HowManyDaysFromToday][k+j]);
+                times[HowManyDaysFromToday][k+j] = 0;
+              }}
+                else if (Orders[i].time_minute == 2 && times[HowManyDaysFromToday][k] == Orders[i].time_hour + ":40"){ 
+                    if (dura > 1){
+                    for (var s = 0; s < dura-1; s++){if (k >s){
+                RemovedTimes[HowManyDaysFromToday].push(times[HowManyDaysFromToday][k-s-1]);}
+
+                    }}
+                    // console.log(times[HowManyDaysFromToday]); 
+                    for (var j = 0; j < dur; j++){
+                RemovedTimes[HowManyDaysFromToday].push(times[HowManyDaysFromToday][k+j]);
+                times[HowManyDaysFromToday][k+j] = 0;
+              }}}
+               
+               }
+}
+}
+return times}}
+
+//Adds all appointment times of day into 1-dim array, 0 is time taken
+function AllTimes(day) {
+var TimesList = new Array();       
+for (let i = 0; i < day.length-1; i++){
+    TimesList.push(day[i]);}
+    
+return TimesList;}
+
+//For given day, mark if unavailable
+function IsUnavailable(day,number) {
+    if (day = 0){
+        // console.log("true");
+        return true;
+    }
+    else if (Array.isArray(day)){
+        // console.log("false");
+var TimesList = AllTimes(day);
+// Check if there's a time block of length number available on given day
+for (let i = 0; i < TimesList.length; i++) {
+    let TemporaryBool = true;
+    for (let j = 0; j <= number; j++) {
+        if (TimesList[i+j] = 0) {
+            TemporaryBool = false;
+        }
+    }if (TemporaryBool){
+        return false;
+    }
+}return true;
+}}
+
+//For chosen treatment and hairdresser, add unavailable dates to array
+function DateUnavailable(times,appointmentDur) {
+var RemovedDates = new Array();
+// var times = TotalTimes(hairdresser);
+// console.log("before " + times);
+// FindTimes(hairdresser,times);
+// console.log("sigh " + times);
+if (Array.isArray(times)){
+for (let i = 0; i < times.length; i++){
+    if (times[i]== 0 || OpenClose[i].close_time - OpenClose[i].open_time <= 0 || IsUnavailable(times[i],appointmentDur)) {
+        var date = new Date(OpenClose[i].datum);
+        var day = date.getDate(),
+            month = date.getMonth(),
+            year = date.getFullYear();
+    RemovedDates.push(date);
+}
+// else {console.log(times[i]);}
+
+}}
+// console.log(RemovedDates);
+return RemovedDates;
+}
+
+//On submit we send order to serverside, then db, then redirect to summary page
+function onsubmit(){
+    
+    if(ChosenTime){
+    $.ajax({
+        type: 'POST',
+        url: '/'+id+'/add_order',
+        data: {
+
+            Treatment   :ChosenTreatment,
+            Duration    :ChosenTreatmentDuration,
+            Hairdresser :ChosenHairdresser,
+            Date        :ChosenDate,
+            Time        :ChosenTime,
+            Name        :Firstname.value + " " + Lastname.value,
+            Email       : Email.value,
+            Phone       : Phone.value
+        },
+        // contentType: "application/json; charset=utf-8",
+        success: function (data,textStatus, jqXHR) {
+            window.location = data.redirect;
+        },
+        error: (err)=>{console.log("error");}
+    });}
+    else{
+        return
+    }
+
+}
+
+</script>
+
+</body>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/navbar.css">
+    <link rel="stylesheet" href="/../css/employee_info.css">
+    <base href="../../">
+</head>
+<body>
+  
+  <%- include('./models/nav'); %>
+
+<h2>Edit Employee Info</h2>
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="center col-sm-3">
+        <div class="property-card">
+          <a href="<%=id%>/employees/employee_info/edit_individual_date">
+            <div class="property-image" id="individual_image">
+              <div class="property-image-title">
+                <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+              </div>
+            </div></a>
+          <div class="property-description">
+            <h5> Edit Work Hours for Individual Date </h5>
+            <p>For given employee and date, change their work hours.</p>
+          </div>
+          <a href="#">
+          </a>
+        </div>
+      </div>
+    <div class="center col-sm-3">
+        <div class="property-card">
+          <a href="<%=id%>/employees/employee_info/edit_work_hours">
+            <div class="property-image" id="general_image">
+              <div class="property-image-title">
+                <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+              </div>
+            </div></a>
+          <div class="property-description">
+            <h5> Edit Work Hours </h5>
+            <p> Edit the work hours of each Monday, Tuesday etc. for chosen employee.</p>
+          </div>
+          <a href="#">
+          </a>
+        </div>
+      </div><div class="col-sm-3"></div>
+  </div>
+
+ <div class="row"><div class="col-sm-4"></div>
+ <div class="center col-sm-3" id="addnew">
+    <div class="property-card" id="treatment_image">
+      <a href="<%=id%>/employees/employee_info/edit_treatments">
+        <div class="property-image">
+          <div class="property-image-title">
+            <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+          </div>
+        </div></a>
+      <div class="property-description">
+        <h5> Add/Remove Treatment(s) </h5>
+        <p> For chosen employee, edit the list of treatments they perform.</p>
+      </div>
+      <a href="#">
+      
+      </a>
+    </div>
+  </div>
+      <div class="col-sm-3"></div>
+    </div>
+
+<%- include ('./models/footer'); %>

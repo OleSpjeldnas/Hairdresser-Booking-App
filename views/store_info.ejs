@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/store_info.css">
+    <base href="/">
+</head>
+<body>
+  <%- include('./models/nav'); %>
+<h2>Store Info</h2>
+  <div class="row">
+    <div class="center col-sm-4">
+        <div class="property-card">
+          <a href="<%=id%>/store_info/edit_opening_hours">
+            <div class="property-image" id="apps_image">
+              <div class="property-image-title">
+                <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+              </div>
+            </div></a>
+          <div class="property-description">
+            <h5> Edit Open Hours </h5>
+            <p>Edit general opening/closing hours of each Monday/Tuesday etc.</p>
+          </div>
+          <a href="#">
+          </a>
+        </div>
+      </div>
+    <div class="center col-sm-4">
+        <div class="property-card">
+          <a href="<%=id%>/store_info/edit_individual_date">
+            <div class="property-image" id="info_image">
+              <div class="property-image-title">
+                <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+              </div>
+            </div></a>
+          <div class="property-description">
+            <h5> Edit Individual Open Hours </h5>
+            <p> Edit opening/closing times of individual dates.</p>
+          </div>
+          <a href="#">
+          </a>
+        </div>
+      </div>
+ <div class="center col-sm-4" id="addnew">
+    <div class="property-card" id="new_image">
+      <a href="<%=id%>/store_info/edit_treatments">
+        <div class="property-image">
+        </div></a>
+      <div class="property-description">
+        <h5> Edit Treatments </h5>
+        <p> Add or remove treatment types, or edit price/duration.</p>
+      </div>
+      <a href="#">
+      
+      </a>
+    </div>
+  </div>
+</div>
+
+<%- include ('./models/footer'); %>

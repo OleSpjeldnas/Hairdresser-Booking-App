@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel = "stylesheet" type = "text/css" href="../../../css/appointment-picker.css">
+    <link rel = "stylesheet" type = "text/css" href="../../../css/edit_opening_hours.css">
+    <style>
+        .cont {
+            margin-top: 70px;
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+    </style>
+    <base href="/">
+  
+   </head>
+<body>
+    <%- include('./models/nav'); %>
+
+  <!-- <h2 id="success_msg">The employee's schedule has been updated successfully.</h2> -->
+  <h1>Edit your Store's Opening Hours</h1>
+<div class="cont">
+<div id="mon">
+    <div class="row list-element" id="toggle-mon1"> 
+        
+        <strong class="col-sm-3">Monday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="mon-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="mon-end"></p> 
+        <button class="edit-button" id="mon-change"type="button" class="col-sm-1"><i class="far fa-edit fa-md"></i></button>
+    </div>
+    <div class="row" id="toggle-mon2">
+    <strong class="col-sm-2">Monday</strong><button class="col-sm-1 not-working" id="notworking-mon">Closed</button><p id="startedit-mon" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-mon1" class="col-sm-2"> <p id="endedit-mon" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-mon2" class="col-sm-2"> <button class="cancel-button" id="mon-cancel" class="col-sm-1"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+<div id="tue">
+    <div class="row list-element" id="toggle-tue1"> 
+  
+  <strong class="col-sm-3">Tuesday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="tue-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="tue-end"></p> <button class="edit-button" id="tue-change" class="col-sm-1"><i class="far fa-edit fa-md"></i></button>
+</div>
+<div class="row" id="toggle-tue2">
+<strong class="col-sm-2">Tuesday</strong><button class="col-sm-1 not-working" id="notworking-tue">Closed</button><p id="startedit-tue" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-tue1" class="col-sm-2"> <p id="endedit-tue" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-tue2" class="col-sm-2"> <button class="cancel-button" id="tue-cancel" class="col-sm-1"><i class="fas fa-times"></i>
+</button>
+</div>
+</div>
+<div id="wed">
+    <div class="row list-element" id="toggle-wed1"> 
+  
+  <strong class="col-sm-3">Wednesday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="wed-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="wed-end"></p> <button class="edit-button" id="wed-change" class="col-sm-1"><i class="far fa-edit fa-md"></i></button>
+</div>
+<div class="row" id="toggle-wed2">
+<strong class="col-sm-2">Wednesday</strong><button class="col-sm-1 not-working" id="notworking-wed">Closed</button><p id="startedit-wed" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-wed1" class="col-sm-2"> <p id="endedit-wed" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-wed2" class="col-sm-2"> <button class="cancel-button" id="wed-cancel" class="col-sm-1"><i class="fas fa-times"></i></button>
+</div>
+</div>
+<div id="thu">
+    <div class="row list-element" id="toggle-thu1">  
+  <strong class="col-sm-3">Thursday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="thu-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="thu-end"></p> <button class="edit-button" id="thu-change" class="col-sm-1"><i class="far fa-edit fa-md"></i></button></div>
+<div class="row" id="toggle-thu2">
+<strong class="col-sm-2">Thursday</strong><button class="col-sm-1 not-working" id="notworking-thu">Closed</button><p id="startedit-thu" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-thu1" class="col-sm-2"> <p id="endedit-thu" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-thu2" class="col-sm-2"> <button class="cancel-button" id="thu-cancel" class="col-sm-1"><i class="fas fa-times"></i></button></div>
+</div>
+<div id="fri">
+    <div class="row list-element" id="toggle-fri1"> 
+  
+  <strong class="col-sm-3">Friday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="fri-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="fri-end"></p> <button class="edit-button" id="fri-change" class="col-sm-1"><i class="far fa-edit fa-md"></i></button>
+</div>
+<div class="row" id="toggle-fri2">
+<strong class="col-sm-2">Friday</strong><button class="col-sm-1 not-working" id="notworking-fri">Closed</button><p id="startedit-fri" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-fri1" class="col-sm-2"> <p id="endedit-fri" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-fri2" class="col-sm-2"> <button class="cancel-button" id="fri-cancel" class="col-sm-1"><i class="fas fa-times"></i></button>
+</div>
+</div>
+<div id="sat">
+    <div class="row list-element" id="toggle-sat1"> 
+  
+  <strong class="col-sm-3">Saturday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="sat-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="sat-end"></p> <button class="edit-button" id="sat-change" class="col-sm-1"><i class="far fa-edit fa-md"></i></button>
+</div>
+<div class="row" id="toggle-sat2">
+<strong class="col-sm-2">Saturday</strong><button class="col-sm-1 not-working" id="notworking-sat">Closed</button><p id="startedit-sat" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-sat1" class="col-sm-2"> <p id="endedit-sat" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-sat2" class="col-sm-2"> <button class="cancel-button" id="sat-cancel" class="col-sm-1"><i class="fas fa-times"></i></button>
+</div>
+</div>
+<div id="sun">
+    <div class="row list-element" id="toggle-sun1"> 
+  
+  <strong class="col-sm-3">Sunday</strong><p class="col-sm-2">Start Time:</p><p class="col-sm-2" id="sun-start"> </p> <p class="col-sm-2">End Time:</p><p class="col-sm-2" id="sun-end"></p> <button class="edit-button" id="sun-change" class="col-sm-1"><i class="far fa-edit fa-md"></i></button>
+</div>
+<div class="row" id="toggle-sun2">
+<strong class="col-sm-2">Sunday</strong><button class="col-sm-1 not-working" id="notworking-sun">Closed</button><p id="startedit-sun" class="col-sm-2">Start Time:</p><input type="text" id ="timepicker-sun1" class="col-sm-2"> <p id="endedit-sun" class="col-sm-2">End Time:</p><input type="text" id ="timepicker-sun2" class="col-sm-2"> <button class="cancel-button" id="sun-cancel" class="col-sm-1"><i class="fas fa-times"></i></button>
+</div>
+</div>
+
+<input id="submit" type="submit"  value="Save Changes">
+</div>
+    
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <script src="/../../../js/appointment-picker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+ 
+<script>
+    var WeeklySchedule   = <%- JSON.stringify(WeeklySchedule || null) %>,
+        admin_id =         <%- JSON.stringify(id || null) %>;
+
+    var weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
+window.onload = function(){
+    ShowTimes();
+    
+    weekdays.forEach((weekday)=> {
+        Toggle(weekday, 2);
+    });
+}
+
+    
+    $(window).scroll(function() {
+      if ($(document).scrollTop() > 400) {
+          $('.nav').addClass('affix');
+      } else {
+          $('.nav').removeClass('affix');
+      }
+  });
+
+  $("#submit").click(function(){
+      if (editmon && pickermon1.picker != null && pickermon2.picker != null){
+          mon_start = pickermon1.displayTime.substr(0,2);
+          mon_end   = pickermon2.displayTime.substr(0,2);}     
+      if (edittue && pickertue1.picker != null && pickertue2.picker != null){
+          tue_start = pickertue1.displayTime.substr(0,2);
+          tue_end   = pickertue2.displayTime.substr(0,2);
+          
+      }
+      if (editwed && pickerwed1.picker != null && pickerwed2.picker != null){
+          wed_start = pickerwed1.displayTime.substr(0,2);
+          wed_end   = pickerwed2.displayTime.substr(0,2);
+      }
+      if (editthu && pickerthu1.picker != null && pickerthu2.picker != null){
+          thu_start = pickerthu1.displayTime.substr(0,2);
+          thu_end   = pickerthu2.displayTime.substr(0,2);
+      }
+      if (editfri && pickerfri1.picker != null && pickerfri2.picker != null){
+          fri_start = pickerfri1.displayTime.substr(0,2);
+          fri_end   = pickerfri2.displayTime.substr(0,2);
+      }
+      if (editsat && pickersat1.picker != null && pickersat2.picker != null){
+          sat_start = pickersat1.displayTime.substr(0,2);
+          sat_end   = pickersat2.displayTime.substr(0,2);
+      }
+      if (editsun && pickersun1.picker != null && pickersun2.picker != null){
+          sun_start = pickersun1.displayTime.substr(0,2);
+          sun_end   = pickersun2.displayTime.substr(0,2);
+      }
+ 
+    var Monday    = [mon_start,mon_end];
+    var Tuesday   = [tue_start,tue_end];
+    var Wednesday = [wed_start,wed_end];
+    var Thursday  = [thu_start,thu_end];
+    var Friday    = [fri_start,fri_end];
+    var Saturday  = [sat_start,sat_end];
+    var Sunday    = [sun_start,sun_end];
+    var Weekdays =  [Monday, Tuesday, Wednesday,Thursday, Friday, Saturday, Sunday];
+
+    $.ajax({
+    type: 'POST',
+    url: '/'+admin_id+'/store_info/edit_opening_hours',
+    data: JSON.stringify({
+        Weekdays: Weekdays
+    }),
+     contentType: "application/json",
+    success: function (data,textStatus, jqXHR) {
+        window.location = data.redirect;
+        
+    },
+    error: (err)=>{console.log("error");}
+});
+});
+
+function ShowTimes(){
+    var person = WeeklySchedule;
+
+if (person.mon_start < person.mon_end){
+document.getElementById("mon-start").innerHTML = person.mon_start+ ":00";
+document.getElementById("mon-end").innerHTML = person.mon_end+ ":00";}
+
+if (person.mon_start >= person.mon_end) {
+document.getElementById("mon-start").innerHTML = ""
+document.getElementById("mon-end").innerHTML = "";
+}
+
+if (person.tue_start < person.tue_end){
+document.getElementById("tue-start").innerHTML = person.tue_start+ ":00";
+document.getElementById("tue-end").innerHTML = person.tue_end+ ":00";}
+
+if (person.tue_start >= person.tue_end) {
+document.getElementById("tue-start").innerHTML = ""
+document.getElementById("tue-end").innerHTML = "";
+}
+
+if (person.wed_start < person.wed_end){
+document.getElementById("wed-start").innerHTML = person.wed_start+ ":00";
+document.getElementById("wed-end").innerHTML = person.wed_end+ ":00";}
+
+if (person.wed_start >= person.wed_end) {
+document.getElementById("wed-start").innerHTML = ""
+document.getElementById("wed-end").innerHTML = "";
+}
+
+if (person.thu_start < person.thu_end){
+document.getElementById("thu-start").innerHTML = person.thu_start+ ":00";
+document.getElementById("thu-end").innerHTML = person.thu_end+ ":00";}
+
+if (person.thu_start >= person.thu_end) {
+document.getElementById("thu-start").innerHTML = ""
+document.getElementById("thu-end").innerHTML = "";
+}
+
+if (person.fri_start < person.fri_end){
+document.getElementById("fri-start").innerHTML = person.fri_start+ ":00";
+document.getElementById("fri-end").innerHTML = person.fri_end+ ":00";}
+
+if (person.fri_start >= person.fri_end) {
+document.getElementById("fri-start").innerHTML = ""
+document.getElementById("fri-end").innerHTML = "";
+}
+
+if (person.sat_start < person.sat_end){
+document.getElementById("sat-start").innerHTML = person.sat_start+ ":00";
+document.getElementById("sat-end").innerHTML = person.sat_end+ ":00";}
+
+if (person.sat_start >= person.sat_end) {
+document.getElementById("sat-start").innerHTML = ""
+document.getElementById("sat-end").innerHTML = "";
+}
+
+if (person.sun_start < person.sun_end){
+document.getElementById("sun-start").innerHTML = person.sun_start+ ":00";
+document.getElementById("sun-end").innerHTML = person.sun_end+ ":00";}
+
+if (person.sun_start >= person.sun_end) {
+document.getElementById("sun-start").innerHTML = ""
+document.getElementById("sun-end").innerHTML = "";
+}
+
+}
+
+var pickermon1 = new AppointmentPicker(document.getElementById('timepicker-mon1'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickermon2 = new AppointmentPicker(document.getElementById('timepicker-mon2'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickertue1 = new AppointmentPicker(document.getElementById('timepicker-tue1'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickertue2 = new AppointmentPicker(document.getElementById('timepicker-tue2'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerwed1 = new AppointmentPicker(document.getElementById('timepicker-wed1'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerwed2 = new AppointmentPicker(document.getElementById('timepicker-wed2'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerthu1 = new AppointmentPicker(document.getElementById('timepicker-thu1'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerthu2 = new AppointmentPicker(document.getElementById('timepicker-thu2'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerfri1 = new AppointmentPicker(document.getElementById('timepicker-fri1'), {
+	interval: 60,
+    title: "",
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickerfri2 = new AppointmentPicker(document.getElementById('timepicker-fri2'), {
+	interval: 60,
+    title: "",
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersat1 = new AppointmentPicker(document.getElementById('timepicker-sat1'), {
+	interval: 60,
+	mode: '24h',
+	minTime: 6,
+    title: "",
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersat2 = new AppointmentPicker(document.getElementById('timepicker-sat2'), {
+    interval: 60,
+    title: "",
+	mode: '24h',
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersun1 = new AppointmentPicker(document.getElementById('timepicker-sun1'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+var pickersun2 = new AppointmentPicker(document.getElementById('timepicker-sun2'), {
+	interval: 60,
+	mode: '24h',
+    title: "",
+	minTime: 6,
+	maxTime: 22,
+	startTime: 6,
+	endTime: 22,
+    leadingZero: true,
+    templateInner: '<li class="appo-picker-list-item {{disabled}}"><input type="button" tabindex="-1" value="{{time}}" {{disabled}}></li>',
+  templateOuter: '<span class="appo-picker-title">{{title}}</span><ul class="appo-picker-list">{{innerHtml}}</ul>'
+
+});
+
+var mon_start = WeeklySchedule.mon_start;
+var mon_end   = WeeklySchedule.mon_end  ;
+
+var tue_start = WeeklySchedule.tue_start;
+var tue_end   = WeeklySchedule.tue_end  ;
+
+var wed_start = WeeklySchedule.wed_start;
+var wed_end   = WeeklySchedule.wed_end  ;
+
+var thu_start = WeeklySchedule.thu_start;
+var thu_end   = WeeklySchedule.thu_end  ;
+
+var fri_start = WeeklySchedule.fri_start;
+var fri_end   = WeeklySchedule.fri_end  ;
+
+var sat_start = WeeklySchedule.sat_start;
+var sat_end   = WeeklySchedule.sat_end  ;
+
+var sun_start = WeeklySchedule.sun_start;
+var sun_end   = WeeklySchedule.sun_end  ;
+
+var perm_mon_start = WeeklySchedule.mon_start;
+var perm_mon_end   = WeeklySchedule.mon_end  ;
+
+var perm_tue_start = WeeklySchedule.tue_start;
+var perm_tue_end   = WeeklySchedule.tue_end  ;
+
+var perm_wed_start = WeeklySchedule.wed_start;
+var perm_wed_end   = WeeklySchedule.wed_end  ;
+
+var perm_thu_start = WeeklySchedule.thu_start;
+var perm_thu_end   = WeeklySchedule.thu_end  ;
+
+var perm_fri_start = WeeklySchedule.fri_start;
+var perm_fri_end   = WeeklySchedule.fri_end  ;
+
+var perm_sat_start = WeeklySchedule.sat_start;
+var perm_sat_end   = WeeklySchedule.sat_end  ;
+
+var perm_sun_start = WeeklySchedule.sun_start;
+var perm_sun_end   = WeeklySchedule.sun_end  ;
+
+$("#mon-change").click(function(){
+    editmon = true;
+Toggle("mon",1);
+});
+
+$("#tue-change").click(function(){
+    edittue = true;
+Toggle("tue",1);
+});
+
+$("#wed-change").click(function(){
+    editwed = true;
+Toggle("wed",1);
+});
+
+$("#thu-change").click(function(){
+    editthu = true;
+Toggle("thu",1);
+});
+
+$("#fri-change").click(function(){
+    editfri = true;
+Toggle("fri",1);
+});
+
+$("#sat-change").click(function(){
+    editsat = true;
+Toggle("sat",1);
+});
+
+$("#sun-change").click(function(){
+    editsun = true;
+Toggle("sun",1);
+});
+
+var notworkingmon = false;
+var notworkingtue = false;
+var notworkingwed = false;
+var notworkingthu = false;
+var notworkingfri = false;
+var notworkingsat = false;
+var notworkingsun = false;
+
+var editmon = false;
+var edittue = false;
+var editwed = false;
+var editthu = false;
+var editfri = false;
+var editsat = false;
+var editsun = false;
+
+$("#notworking-mon").click(function(){
+notworkingmon = !notworkingmon;
+
+if (notworkingmon){
+$("#notworking-mon").addClass("picked");  
+$("#startedit-mon").hide();
+$("#endedit-mon").hide();
+  $("#timepicker-mon1").hide();
+  $("#timepicker-mon2").hide();
+  pickermon1.setTime("12:00");
+  pickermon2.setTime("12:00");
+  pickermon1.picker = "12:00";
+  pickermon2.picker = "12:00";
+}
+else {
+    $("#notworking-mon").removeClass("picked");  
+    $("#startedit-mon").show();
+    $("#endedit-mon").show();
+  pickermon1.picker = null;
+  pickermon2.picker = null;
+  pickermon1.setTime("");
+  pickermon2.setTime("");
+  $("#timepicker-mon1").show();
+  $("#timepicker-mon2").show();
+}
+});
+$("#notworking-tue").click(function(){
+notworkingtue = !notworkingtue;
+
+if (notworkingtue){
+$("#notworking-tue").addClass("picked");  
+$("#startedit-tue").hide();
+$("#endedit-tue").hide();
+  $("#timepicker-tue1").hide();
+  $("#timepicker-tue2").hide();
+  pickertue1.setTime("12:00");
+  pickertue2.setTime("12:00");
+  pickertue1.picker = "12:00";
+  pickertue2.picker = "12:00";
+}
+else {
+    $("#notworking-tue").removeClass("picked");  
+    $("#startedit-tue").show();
+    $("#endedit-tue").show();
+  pickertue1.picker = null;
+  pickertue2.picker = null;
+  pickertue1.setTime("");
+  pickertue2.setTime("");
+  $("#timepicker-tue1").show();
+  $("#timepicker-tue2").show();
+}
+});
+$("#notworking-wed").click(function(){
+notworkingwed = !notworkingwed;
+
+if (notworkingwed){
+$("#notworking-wed").addClass("picked");  
+$("#startedit-wed").hide();
+$("#endedit-wed").hide();
+  $("#timepicker-wed1").hide();
+  $("#timepicker-wed2").hide();
+  pickerwed1.setTime("12:00");
+  pickerwed2.setTime("12:00");
+  pickerwed1.picker = "12:00";
+  pickerwed2.picker = "12:00";
+}
+else {
+    $("#notworking-wed").removeClass("picked");  
+    $("#startedit-wed").show();
+    $("#endedit-wed").show();
+  pickerwed1.picker = null;
+  pickerwed2.picker = null;
+  pickerwed1.setTime("");
+  pickerwed2.setTime("");
+  $("#timepicker-wed1").show();
+  $("#timepicker-wed2").show();
+}
+});
+$("#notworking-thu").click(function(){
+notworkingthu = !notworkingthu;
+
+if (notworkingthu){
+$("#notworking-thu").addClass("picked");  
+$("#startedit-thu").hide();
+$("#endedit-thu").hide();
+  $("#timepicker-thu1").hide();
+  $("#timepicker-thu2").hide();
+  pickerthu1.setTime("12:00");
+  pickerthu2.setTime("12:00");
+  pickerthu1.picker = "12:00";
+  pickerthu2.picker = "12:00";
+}
+else {
+    $("#notworking-thu").removeClass("picked");  
+    $("#startedit-thu").show();
+    $("#endedit-thu").show();
+  pickerthu1.picker = null;
+  pickerthu2.picker = null;
+  pickerthu1.setTime("");
+  pickerthu2.setTime("");
+  $("#timepicker-thu1").show();
+  $("#timepicker-thu2").show();
+}
+});
+$("#notworking-fri").click(function(){
+notworkingfri = !notworkingfri;
+
+if (notworkingfri){
+$("#notworking-fri").addClass("picked");  
+$("#startedit-fri").hide();
+$("#endedit-fri").hide();
+  $("#timepicker-fri1").hide();
+  $("#timepicker-fri2").hide();
+  pickerfri1.setTime("12:00");
+  pickerfri2.setTime("12:00");
+  pickerfri1.picker = "12:00";
+  pickerfri2.picker = "12:00";
+}
+else {
+    $("#notworking-fri").removeClass("picked");  
+    $("#startedit-fri").show();
+    $("#endedit-fri").show();
+  pickerfri1.picker = null;
+  pickerfri2.picker = null;
+  pickerfri1.setTime("");
+  pickerfri2.setTime("");
+  $("#timepicker-fri1").show();
+  $("#timepicker-fri2").show();
+}
+});
+$("#notworking-sat").click(function(){
+notworkingsat = !notworkingsat;
+
+if (notworkingsat){
+$("#notworking-sat").addClass("picked");  
+$("#startedit-sat").hide();
+$("#endedit-sat").hide();
+  $("#timepicker-sat1").hide();
+  $("#timepicker-sat2").hide();
+  pickersat1.setTime("12:00");
+  pickersat2.setTime("12:00");
+  pickersat1.picker = "12:00";
+  pickersat2.picker = "12:00";
+}
+else {
+    $("#notworking-sat").removeClass("picked");  
+    $("#startedit-sat").show();
+    $("#endedit-sat").show();
+  pickersat1.picker = null;
+  pickersat2.picker = null;
+  pickersat1.setTime("");
+  pickersat2.setTime("");
+  $("#timepicker-sat1").show();
+  $("#timepicker-sat2").show();
+}
+});
+$("#notworking-sun").click(function(){
+notworkingsun = !notworkingsun;
+
+if (notworkingsun){
+    $("#notworking-sun").addClass("picked");  
+$("#startedit-sun").hide();
+$("#endedit-sun").hide();
+  $("#timepicker-sun1").hide();
+  $("#timepicker-sun2").hide();
+  pickersun1.setTime("12:00");
+  pickersun2.setTime("12:00");
+  pickersun1.picker = "12:00";
+  pickersun2.picker = "12:00";
+}
+else {
+    $("#notworking-sun").removeClass("picked");  
+    $("#startedit-sun").show();
+    $("#endedit-sun").show();
+  pickersun1.picker = null;
+  pickersun2.picker = null;
+  pickersun1.setTime("");
+  pickersun2.setTime("");
+  $("#timepicker-sun1").show();
+  $("#timepicker-sun2").show();
+}
+});
+
+$("#mon-cancel").click(function(){
+    editmon = false;
+    mon_start = perm_mon_start;
+    mon_end = perm_mon_end;
+Toggle("mon",2);
+});
+
+$("#tue-cancel").click(function(){
+    edittue = false;
+    tue_start = perm_tue_start;
+    tue_end = perm_tue_end;
+Toggle("tue",2);
+});
+
+$("#wed-cancel").click(function(){
+    editwed = false;
+    wed_start = perm_wed_start;
+    wed_end = perm_wed_end;
+Toggle("wed",2);
+});
+
+$("#thu-cancel").click(function(){
+    editthu = false;
+    thu_start = perm_thu_start;
+    thu_end = perm_thu_end;
+Toggle("thu",2);
+});
+
+$("#fri-cancel").click(function(){
+    editfri = false;
+    fri_start = perm_fri_start;
+    fri_end = perm_fri_end;
+Toggle("fri",2);
+});
+
+$("#sat-cancel").click(function(){
+    editsat = false;
+    sat_start = perm_sat_start;
+    sat_end = perm_sat_end;
+Toggle("sat",2);
+});
+
+$("#sun-cancel").click(function(){
+    editsun = false;
+    sun_start = perm_sun_start;
+    sun_end = perm_sun_end;
+Toggle("sun",2);
+});
+
+function Toggle(day, num){
+
+    if (num ==1){
+        $("#toggle-"+day+"1").hide();
+        $("#toggle-"+day+"2").show();}
+
+    else{
+        $("#toggle-"+day+"2").hide();
+        $("#toggle-"+day+"1").show();
+    }
+}
+</script>
+</body>
